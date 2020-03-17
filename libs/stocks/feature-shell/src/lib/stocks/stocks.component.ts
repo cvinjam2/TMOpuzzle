@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'coding-challenge-stocks',
@@ -32,9 +33,13 @@ export class StocksComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.stockPickerForm.valueChanges.pipe(debounceTime(1000), distinctUntilChanged()).
+    subscribe(this.fetchQuote);
+    
+  }
 
-  fetchQuote() {
+  fetchQuote = (): void => {
     if (this.stockPickerForm.valid) {
       const { symbol, period } = this.stockPickerForm.value;
       this.priceQuery.fetchQuote(symbol, period);
