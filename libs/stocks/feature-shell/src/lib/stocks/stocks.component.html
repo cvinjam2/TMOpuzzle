@@ -6,30 +6,40 @@
       formControlName="symbol"
       value=""
     />
-    <mat-error
-      ><span
-        *ngIf="
+    <mat-error>
+      <span *ngIf="
           !stockPickerForm.get('symbol').valid &&
           stockPickerForm.get('symbol').touched
         "
-        >Please enter a symbol</span
-      >
+      >Please enter a symbol</span>
     </mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Favorite time period</mat-label>
-    <mat-select formControlName="period">
-      <mat-option
-        *ngFor="let timePeriod of timePeriods"
-        [value]="timePeriod.value"
-      >
-        {{ timePeriod.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+      <input matInput
+             [max]="maxDate"
+             [matDatepicker]="fromDatepicker"
+             formControlName="fromDate"
+             (click)="fromDatepicker.open()"
+             placeholder="Choose From date">
+      <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromDatepicker></mat-datepicker>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <!--- setting fromDate value as min value for toDate picker, this was toDate cannot be before fromDate -->
+      <input matInput
+             [min]="stockPickerForm.get('fromDate').value"
+             [max]="maxDate"
+             formControlName="toDate"
+             [matDatepicker]="toDatepicker"
+             (click)="toDatepicker.open()"
+             placeholder="Choose To date">
+      <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #toDatepicker></mat-datepicker>
+    </mat-form-field>
 
   <button (click)="fetchQuote()" mat-raised-button>Go</button>
 </form>
 
-<coding-challenge-chart [data$]="quotes$"></coding-challenge-chart>
+<coding-challenge-chart [data]="quotes$|async"></coding-challenge-chart>
