@@ -1,10 +1,11 @@
-<form [formGroup]="stockPickerForm">
+<form [formGroup]="stockPickerForm" (ngSubmit)="fetchQuote()">
   <mat-form-field>
     <input
       matInput
       placeholder="Symbol e.g AAPL"
       formControlName="symbol"
       value=""
+      aria-label="Please enter a symbol"
     />
     <mat-error
       ><span
@@ -29,7 +30,7 @@
     </mat-select>
   </mat-form-field>
 
-  <button (click)="fetchQuote()" mat-raised-button>Go</button>
+  <button type="submit" mat-raised-button>Go</button>
 </form>
 
-<coding-challenge-chart [data$]="quotes$"></coding-challenge-chart>
+<coding-challenge-chart [data]="quotes$|async"></coding-challenge-chart>
