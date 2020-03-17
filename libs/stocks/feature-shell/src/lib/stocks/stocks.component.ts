@@ -11,7 +11,8 @@ export class StocksComponent implements OnInit {
   stockPickerForm: FormGroup;
   symbol: string;
   period: string;
-
+  fromDate: Date;
+  toDate: Date;
   quotes$ = this.priceQuery.priceQueries$;
 
   timePeriods = [
@@ -24,11 +25,14 @@ export class StocksComponent implements OnInit {
     { viewValue: 'Three months', value: '3m' },
     { viewValue: 'One month', value: '1m' }
   ];
+  maxDate = new Date(); //  date-pickers should not allow selection of dates after the current day.
 
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = fb.group({
       symbol: [null, Validators.required],
-      period: [null, Validators.required]
+      period: [null, Validators.required],
+      fromDate: [null, Validators.required],
+      toDate: [null, Validators.required]
     });
   }
 
@@ -39,5 +43,6 @@ export class StocksComponent implements OnInit {
       const { symbol, period } = this.stockPickerForm.value;
       this.priceQuery.fetchQuote(symbol, period);
     }
+    console.log(this.quotes$);
   }
 }
