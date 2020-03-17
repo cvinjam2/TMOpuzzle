@@ -11,8 +11,7 @@ import {
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit {
-  @Input() data$: any;
-  chartData: any;
+  @Input() data: (string | number)[][];
 
   chart: {
     title: string;
