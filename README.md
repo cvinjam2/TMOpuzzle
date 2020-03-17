@@ -44,8 +44,15 @@ Please provide a short code review of the base `master` branch:
 
 #### Task 1-A
 1. What is done well?
+    The project structure is created using nx (monorepo), which provides out of box configuration of frameworks and modern tools, so that we can focus more on application and not on configuration.
+    Easily share code across multiple applications and leverage dependency graph.
+    apps folder is simple and light, chart component is created as shared lib so that it can be re-used in other applications.
 2. What would you change?
+    Add lint rules in tslint.json for example, typedef for properties, parameters.
+    Also using css pre-processors will helps along with the size of app grows.
 3. Are there any code smells or problematic implementations?
+    As data is passed as input to chart-component, subscription of datta is not required.
+    Properties do not have type-definitions.
 
 > Make a PR to fix at least one of the issues that you identify
 
