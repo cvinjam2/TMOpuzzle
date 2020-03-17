@@ -40,9 +40,10 @@ export class StocksComponent implements OnInit {
 
   fetchQuote() {
     if (this.stockPickerForm.valid) {
-      const { symbol, period } = this.stockPickerForm.value;
-      this.priceQuery.fetchQuote(symbol, period);
+      const { symbol, period, fromDate, toDate } = this.stockPickerForm.value;
+      const fromDateNumeric = fromDate.getTime();
+      const toDateNumeric = toDate.getTime();
+      this.priceQuery.fetchQuote(symbol, period, fromDateNumeric, toDateNumeric);
     }
-    console.log(this.quotes$);
   }
 }

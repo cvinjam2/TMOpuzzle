@@ -17,7 +17,7 @@ export const priceQueryAdapter: EntityAdapter<PriceQuery> = createEntityAdapter<
   PriceQuery
 >({
   selectId: (priceQuery: PriceQuery) => priceQuery.dateNumeric,
-  sortComparer: sortByDateNumeric
+  sortComparer: sortByDateNumeric // this can be made false to improve performance, since API is returning by date ascending.
 });
 
 export interface PriceQueryPartialState {
@@ -35,7 +35,7 @@ export function priceQueryReducer(
   switch (action.type) {
     case PriceQueryActionTypes.PriceQueryFetched: {
       return priceQueryAdapter.addAll(
-        transformPriceQueryResponse(action.queryResults),
+        transformPriceQueryResponse(action.queryResults, action.fromDateNumeric, action.toDateNumeric),
         state
       );
     }
