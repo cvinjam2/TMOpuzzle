@@ -5,5 +5,5 @@
 export const environment = {
   production: false,
   apiKey: 'Tpk_e8869b01170c420f8e1158780f29a968',
-  apiURL: 'http://localhost:3333'
+  apiURL: 'https://sandbox.iexapis.com'
 };
